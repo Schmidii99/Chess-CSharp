@@ -1,0 +1,11 @@
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\bin\Debug\ChessV3.exe.config
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\bin\Debug\ChessV3.exe
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\bin\Debug\ChessV3.pdb
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj.AssemblyReference.cache
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.Form1.resources
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.Properties.Resources.resources
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj.GenerateResource.cache
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj.CoreCompileInputs.cache
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.exe
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.pdb
+C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj.SuggestedBindingRedirects.cache
