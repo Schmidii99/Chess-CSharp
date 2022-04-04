@@ -4,7 +4,13 @@ namespace ChessV3.Figures
 {
     public class Rook : Figure
     {
-        public override bool IsWhite { get; set; } = true;
+        public override bool IsWhite { get; set; }
+
+        public Rook(bool isWhite = true)
+        {
+            this.IsWhite = isWhite;
+        }
+
 
         public override void Show(Vector2 pos)
         {

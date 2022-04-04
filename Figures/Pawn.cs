@@ -9,9 +9,9 @@ namespace ChessV3.Figures
     {
         public override bool IsWhite { get; set; }
 
-        public Pawn(bool IsWhite = true)
+        public Pawn(bool isWhite = true)
         {
-            this.IsWhite = IsWhite;
+            this.IsWhite = isWhite;
         }
 
         public override void Show(Vector2 pos)

@@ -4,7 +4,12 @@ namespace ChessV3.Figures
 {
     public class Knight : Figure
     {
-        public override bool IsWhite { get; set; } = true;
+        public override bool IsWhite { get; set; }
+
+        public Knight(bool isWhite = true)
+        {
+            this.IsWhite = isWhite;
+        }
 
         public override void Show(Vector2 pos)
         {
