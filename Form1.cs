@@ -38,6 +38,7 @@ namespace ChessV3
             }
 
             // just for testing purposes
+            /*
             gameBoard[0][0].figure = new Figures.Pawn();
             gameBoard[7][0].figure = new Figures.Pawn();
             gameBoard[6][1].figure = new Figures.Pawn();
@@ -60,12 +61,18 @@ namespace ChessV3
             gameBoard[1][5].figure = new Figures.Pawn(false);
             gameBoard[3][5].figure = new Figures.Pawn();
             gameBoard[7][6].figure = new Figures.Pawn(IsWhite:false);
-
+            */
+            /*
             gameBoard[4][4].figure = new Figures.Rook();
             gameBoard[4][2].figure = new Figures.Rook();
 
             gameBoard[5][5].figure = new Figures.Bishop();
             gameBoard[3][3].figure = new Figures.Knight();
+
+            gameBoard[0][0].figure = new Figures.King(isWhite: true);
+            */
+
+            gameBoard[4][4].figure = new Figures.Queen(isWhite: true);
             // -------------------------
 
             Show_GameBoard();
@@ -430,7 +437,233 @@ namespace ChessV3
                     gameBoard[i][j].IsValidMove = true;
                 }
             }
-                Show_Valid_Moves();
+            else if (figure is Figures.King)
+            {
+                // up
+                if (curr_x > 0)
+                {
+                    if (gameBoard[curr_x - 1][curr_y].figure == null)
+                        gameBoard[curr_x - 1][curr_y].IsValidMove = true;
+                    else if (gameBoard[curr_x - 1][curr_y].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x - 1][curr_y].IsValidMove = true;
+                }
+
+                // down
+                if (curr_x < Config.Row_count - 1)
+                {
+                    if (gameBoard[curr_x + 1][curr_y].figure == null)
+                        gameBoard[curr_x + 1][curr_y].IsValidMove = true;
+                    else if (gameBoard[curr_x + 1][curr_y].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x + 1][curr_y].IsValidMove = true;
+                }
+
+                // left
+                if (curr_y > 0)
+                {
+                    if (gameBoard[curr_x][curr_y - 1].figure == null)
+                        gameBoard[curr_x][curr_y - 1].IsValidMove = true;
+                    else if (gameBoard[curr_x][curr_y - 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x][curr_y - 1].IsValidMove = true;
+                }
+
+                // right
+                if (curr_y < Config.Colum_count - 1)
+                {
+                    if (gameBoard[curr_x][curr_y + 1].figure == null)
+                        gameBoard[curr_x][curr_y + 1].IsValidMove = true;
+                    else if (gameBoard[curr_x][curr_y + 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x][curr_y + 1].IsValidMove = true;
+                }
+
+                // up left
+                if (curr_x > 0 && curr_y > 0)
+                {
+                    if (gameBoard[curr_x - 1][curr_y - 1].figure == null)
+                        gameBoard[curr_x - 1][curr_y - 1].IsValidMove = true;
+                    else if (gameBoard[curr_x - 1][curr_y - 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x - 1][curr_y - 1].IsValidMove = true;
+                }
+
+                // up right
+                if (curr_x > 0 && curr_y < Config.Colum_count - 1)
+                {
+                    if (gameBoard[curr_x - 1][curr_y + 1].figure == null)
+                        gameBoard[curr_x - 1][curr_y + 1].IsValidMove = true;
+                    else if (gameBoard[curr_x - 1][curr_y + 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x - 1][curr_y + 1].IsValidMove = true;
+                }
+
+                // down left
+                if (curr_x < Config.Row_count - 1 && curr_y > 0)
+                {
+                    if (gameBoard[curr_x + 1][curr_y - 1].figure == null)
+                        gameBoard[curr_x + 1][curr_y - 1].IsValidMove = true;
+                    else if (gameBoard[curr_x + 1][curr_y - 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x + 1][curr_y - 1].IsValidMove = true;
+                }
+
+                //down right
+                if (curr_x < Config.Row_count - 1 && curr_y < Config.Colum_count - 1)
+                {
+                    if (gameBoard[curr_x + 1][curr_y + 1].figure == null)
+                        gameBoard[curr_x + 1][curr_y + 1].IsValidMove = true;
+                    else if (gameBoard[curr_x + 1][curr_y + 1].figure.IsWhite != figure.IsWhite)
+                        gameBoard[curr_x + 1][curr_y + 1].IsValidMove = true;
+                }
+            }
+            else if (figure is Figures.Queen)
+            {
+                // From Rook -------------------------------------
+                #region From Rook
+                // under
+                for (int i = curr_x + 1; i < Config.Row_count; i++)
+                {
+                    if (gameBoard[i][curr_y].figure != null)
+                    {
+                        if (gameBoard[i][curr_y].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][curr_y].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][curr_y].IsValidMove = true;
+                }
+
+
+                // above
+                for (int i = curr_x - 1; i >= 0; i--)
+                {
+                    if (gameBoard[i][curr_y].figure != null)
+                    {
+                        if (gameBoard[i][curr_y].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][curr_y].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][curr_y].IsValidMove = true;
+                }
+                // right
+                for (int i = curr_y + 1; i < Config.Colum_count; i++)
+                {
+                    if (gameBoard[curr_x][i].figure != null)
+                    {
+                        if (gameBoard[curr_x][i].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][curr_y].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[curr_x][i].IsValidMove = true;
+                }
+
+
+                // left
+                for (int i = curr_y - 1; i >= 0; i--)
+                {
+                    if (gameBoard[curr_x][i].figure != null)
+                    {
+                        if (gameBoard[curr_x][i].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][curr_y].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[curr_x][i].IsValidMove = true;
+                }
+                #endregion
+                // From Bishop -----------------------------------
+                #region From Bishop
+                // up left
+                for (int i = curr_x - 1, j = curr_y - 1; i >= 0 && j >= 0; i--, j--)
+                {
+                    if (gameBoard[i][j].figure != null)
+                    {
+                        if (gameBoard[i][j].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][j].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][j].IsValidMove = true;
+                }
+
+                // up right
+                for (int i = curr_x - 1, j = curr_y + 1; i >= 0 && j < Config.Colum_count; i--, j++)
+                {
+                    if (gameBoard[i][j].figure != null)
+                    {
+                        if (gameBoard[i][j].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][j].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][j].IsValidMove = true;
+                }
+
+                // down right
+                for (int i = curr_x + 1, j = curr_y + 1; i < Config.Row_count && j < Config.Colum_count; i++, j++)
+                {
+                    if (gameBoard[i][j].figure != null)
+                    {
+                        if (gameBoard[i][j].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][j].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][j].IsValidMove = true;
+                }
+
+                //down left
+                for (int i = curr_x + 1, j = curr_y - 1; i < Config.Row_count && j >= 0; i++, j--)
+                {
+                    if (gameBoard[i][j].figure != null)
+                    {
+                        if (gameBoard[i][j].figure.IsWhite == figure.IsWhite)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            gameBoard[i][j].IsValidMove = true;
+                            break;
+                        }
+                    }
+                    gameBoard[i][j].IsValidMove = true;
+                }
+                #endregion
+            }
+            Show_Valid_Moves();
         }
     }
 }
