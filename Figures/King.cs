@@ -16,7 +16,7 @@ namespace ChessV3.Figures
             if (IsWhite)
                 Config.grObj.DrawImage(Properties.Resources.king_white, pos.X, pos.Y, Config.Image_Width, Config.Image_Height);
             else
-                Config.grObj.DrawImage(Properties.Resources.king_white, pos.X, pos.Y, Config.Image_Width, Config.Image_Height);
+                Config.grObj.DrawImage(Properties.Resources.king_black, pos.X, pos.Y, Config.Image_Width, Config.Image_Height);
         }
     }
 }
