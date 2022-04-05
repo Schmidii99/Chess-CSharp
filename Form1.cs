@@ -293,7 +293,7 @@ namespace ChessV3
                         }
                         else
                         {
-                            gameBoard[i][curr_y].IsValidMove = true;
+                            gameBoard[curr_x][i].IsValidMove = true;
                             break;
                         }
                     }
@@ -312,7 +312,7 @@ namespace ChessV3
                         }
                         else
                         {
-                            gameBoard[i][curr_y].IsValidMove = true;
+                            gameBoard[curr_x][i].IsValidMove = true;
                             break;
                         }
                     }
@@ -592,7 +592,7 @@ namespace ChessV3
                         }
                         else
                         {
-                            gameBoard[i][curr_y].IsValidMove = true;
+                            gameBoard[curr_x][i].IsValidMove = true;
                             break;
                         }
                     }
@@ -611,7 +611,7 @@ namespace ChessV3
                         }
                         else
                         {
-                            gameBoard[i][curr_y].IsValidMove = true;
+                            gameBoard[curr_x][i].IsValidMove = true;
                             break;
                         }
                     }
