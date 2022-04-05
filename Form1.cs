@@ -8,6 +8,10 @@ namespace ChessV3
 {
     public partial class Form1 : Form
     {
+        private static bool GameWon = false;
+
+        private static bool WhiteTurn = true;
+
         public static List<List<Cell>> gameBoard = new List<List<Cell>>();
 
         public static bool WhiteOnBottom = true;
@@ -78,6 +82,9 @@ namespace ChessV3
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (GameWon)
+                return;
+
             Point index = Calculate_Cell(e.Location);
             if (index.X < 0 || index.Y < 0)
                 return;
@@ -93,7 +100,13 @@ namespace ChessV3
 
                 // remove figure if it is from different team
                 if (gameBoard[index.X][index.Y].figure != null && gameBoard[index.X][index.Y].figure.IsWhite != Selected_Cell.figure.IsWhite)
+                {
+                    if (gameBoard[index.X][index.Y].figure is Figures.King)
+                        GameWon = true;
+
+                    
                     gameBoard[index.X][index.Y].figure = null;
+                }
 
 
                 Figure temp = null;
@@ -105,11 +118,20 @@ namespace ChessV3
                 Selected_Cell.Show();
                 
                 Selected_Cell = null;
+                WhiteTurn = !WhiteTurn;
+
+                if (GameWon)
+                {
+                    MessageBox.Show("Checkmate!");
+                }
                 return;
             }
 
             
             Selected_Cell = gameBoard[index.X][index.Y];
+
+            if (Selected_Cell.figure.IsWhite != WhiteTurn)
+                return;
 
             Calculate_Valid_Points(PointToVector2(index));
         }
@@ -321,6 +343,7 @@ namespace ChessV3
             }
             else if (figure is Figures.Knight)
             {
+                int valid_moves = 0;
                 // up left
                 if (curr_x > 1 && curr_y > 0)
                 {
