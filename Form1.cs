@@ -10,7 +10,9 @@ namespace ChessV3
     {
         public static List<List<Cell>> gameBoard = new List<List<Cell>>();
 
-        public bool WhiteOnBottom = true;
+        public static bool WhiteOnBottom = true;
+        
+        public static Cell Selected_Cell { get; set; }
 
         public Form1()
         {
@@ -37,45 +39,41 @@ namespace ChessV3
                 }
             }
 
-            // just for testing purposes
-            /*
-            gameBoard[0][0].figure = new Figures.Pawn();
-            gameBoard[7][0].figure = new Figures.Pawn();
-            gameBoard[6][1].figure = new Figures.Pawn();
-            gameBoard[6][7].figure = new Figures.Pawn();
-            gameBoard[0][6].figure = new Figures.Pawn();
-            gameBoard[5][0].figure = new Figures.Pawn(false);
-            gameBoard[5][2].figure = new Figures.Pawn(false);
-            gameBoard[5][1].figure = new Figures.Pawn();
+            add_Default_Figures();
 
-            gameBoard[7][4].figure = new Figures.Pawn();
-            gameBoard[6][5].figure = new Figures.Pawn();
-            gameBoard[5][6].figure = new Figures.Pawn();
-            // gameBoard[4][7].figure = new Figures.Pawn();
-
-            gameBoard[0][2].figure = new Figures.Pawn(false);
-            gameBoard[1][3].figure = new Figures.Pawn(false);
-            gameBoard[2][3].figure = new Figures.Pawn(false);
-            gameBoard[1][4].figure = new Figures.Pawn(false);
-            gameBoard[3][4].figure = new Figures.Pawn(false);
-            gameBoard[1][5].figure = new Figures.Pawn(false);
-            gameBoard[3][5].figure = new Figures.Pawn();
-            gameBoard[7][6].figure = new Figures.Pawn(IsWhite:false);
-            */
-            /*
-            gameBoard[4][4].figure = new Figures.Rook();
-            gameBoard[4][2].figure = new Figures.Rook();
-
-            gameBoard[5][5].figure = new Figures.Bishop();
-            gameBoard[3][3].figure = new Figures.Knight();
-
-            gameBoard[0][0].figure = new Figures.King(isWhite: true);
-            */
-
-            gameBoard[4][4].figure = new Figures.Queen(isWhite: true);
-            // -------------------------
 
             Show_GameBoard();
+        }
+
+        private static void add_Default_Figures()
+        {
+            bool isWhite = false;
+            for (int i = 0; i < Config.Colum_count; i++)
+            {
+                gameBoard[1][i].figure = new Figures.Pawn(isWhite: isWhite);
+                isWhite = !isWhite;
+                gameBoard[6][i].figure = new Figures.Pawn(isWhite: isWhite);
+                isWhite = !isWhite;
+            }
+
+            gameBoard[0][0].figure = new Figures.Rook(isWhite: false);
+            gameBoard[0][1].figure = new Figures.Knight(isWhite: false);
+            gameBoard[0][2].figure = new Figures.Bishop(isWhite: false);
+            gameBoard[0][3].figure = new Figures.Queen(isWhite: false);
+            gameBoard[0][4].figure = new Figures.King(isWhite: false);
+            gameBoard[0][5].figure = new Figures.Bishop(isWhite: false);
+            gameBoard[0][6].figure = new Figures.Knight(isWhite: false);
+            gameBoard[0][7].figure = new Figures.Rook(isWhite: false);
+
+            gameBoard[7][0].figure = new Figures.Rook(isWhite: true);
+            gameBoard[7][1].figure = new Figures.Knight(isWhite: true);
+            gameBoard[7][2].figure = new Figures.Bishop(isWhite: true);
+            gameBoard[7][3].figure = new Figures.Queen(isWhite: true);
+            gameBoard[7][4].figure = new Figures.King(isWhite: true);
+            gameBoard[7][5].figure = new Figures.Bishop(isWhite: true);
+            gameBoard[7][6].figure = new Figures.Knight(isWhite: true);
+            gameBoard[7][7].figure = new Figures.Rook(isWhite: true);
+
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -83,6 +81,35 @@ namespace ChessV3
             Point index = Calculate_Cell(e.Location);
             if (index.X < 0 || index.Y < 0)
                 return;
+
+            if (gameBoard[index.X][index.Y].IsValidMove)
+            {
+                // Security statement if Selected Cell is null
+                if (Selected_Cell == null || Selected_Cell.figure == null)
+                {
+                    Show_Valid_Moves(reset: true);
+                    return;
+                }
+
+                // remove figure if it is from different team
+                if (gameBoard[index.X][index.Y].figure != null && gameBoard[index.X][index.Y].figure.IsWhite != Selected_Cell.figure.IsWhite)
+                    gameBoard[index.X][index.Y].figure = null;
+
+
+                Figure temp = null;
+                temp = gameBoard[index.X][index.Y].figure;
+                gameBoard[index.X][index.Y].figure = Selected_Cell.figure;
+                Selected_Cell.figure = temp;
+
+                Show_Valid_Moves(reset: true);
+                Selected_Cell.Show();
+                
+                Selected_Cell = null;
+                return;
+            }
+
+            
+            Selected_Cell = gameBoard[index.X][index.Y];
 
             Calculate_Valid_Points(PointToVector2(index));
         }
@@ -110,7 +137,7 @@ namespace ChessV3
         public static Vector2 PointToVector2(Point point)
             => new Vector2(point.X, point.Y);
 
-        public static void Show_GameBoard()
+        public static void Show_GameBoard() // IMPORTATNT - OVER DRAWING!!!!
         {
             foreach (List<Cell> item in gameBoard)
             {
@@ -139,7 +166,7 @@ namespace ChessV3
             }
         }
 
-        public void Calculate_Valid_Points(Vector2 current_index)
+        public static void Calculate_Valid_Points(Vector2 current_index)
         {
             Show_Valid_Moves(reset: true);
 
@@ -149,6 +176,7 @@ namespace ChessV3
             int curr_x = (int)current_index.X;
             int curr_y = (int)current_index.Y;
 
+            #region Figure Movement Calculations
             if (figure is Figures.Pawn)
             {
                 if (figure.IsWhite == WhiteOnBottom) // obove
@@ -663,6 +691,8 @@ namespace ChessV3
                 }
                 #endregion
             }
+            #endregion
+
             Show_Valid_Moves();
         }
     }
