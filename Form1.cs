@@ -720,8 +720,11 @@ namespace ChessV3
 
             Label title = new Label();
             title.Text = "Choose Figure!";
+            title.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
             title.Location = new Point(0, 0);
             title.Size = new Size(Config.Form2_Width, Config.Form2_Title_Height);
+            title.TextAlign = ContentAlignment.TopCenter;
+            Form2.Controls.Add(title);
 
             //Queen
             PictureBox PictureBox_Queen = new PictureBox();
@@ -729,7 +732,7 @@ namespace ChessV3
                 PictureBox_Queen.Image = Properties.Resources.queen_white;
             else
                 PictureBox_Queen.Image = Properties.Resources.queen_black;
-            PictureBox_Queen.Size = new Size(Config.Image_Width, Config.Image_Height);
+            PictureBox_Queen.Size = new Size(Config.Form2_PictureBox_Width, Config.Form2_PictureBox_Height);
             PictureBox_Queen.Location = new Point(0, Config.Form2_Title_Height);
             PictureBox_Queen.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox_Queen.Click += new EventHandler(PictureBox_Queen_Click);
@@ -741,8 +744,8 @@ namespace ChessV3
                 PictureBox_Rook.Image = Properties.Resources.rook_white;
             else
                 PictureBox_Rook.Image = Properties.Resources.rook_black;
-            PictureBox_Rook.Size = new Size(Config.Image_Width, Config.Image_Height);
-            PictureBox_Rook.Location = new Point(Config.Image_Width, Config.Form2_Title_Height);
+            PictureBox_Rook.Size = new Size(Config.Form2_PictureBox_Width, Config.Form2_PictureBox_Height);
+            PictureBox_Rook.Location = new Point(Config.Form2_PictureBox_Width, Config.Form2_Title_Height);
             PictureBox_Rook.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox_Rook.Click += new EventHandler(PictureBox_Rook_Click);
             Form2.Controls.Add(PictureBox_Rook);
@@ -753,8 +756,8 @@ namespace ChessV3
                 PictureBox_Bishop.Image = Properties.Resources.bishop_white;
             else
                 PictureBox_Bishop.Image = Properties.Resources.bishop_black;
-            PictureBox_Bishop.Size = new Size(Config.Image_Width, Config.Image_Height);
-            PictureBox_Bishop.Location = new Point(0, Config.Form2_Title_Height + Config.Image_Height);
+            PictureBox_Bishop.Size = new Size(Config.Form2_PictureBox_Width, Config.Form2_PictureBox_Height);
+            PictureBox_Bishop.Location = new Point(0, Config.Form2_Title_Height + Config.Form2_PictureBox_Height);
             PictureBox_Bishop.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox_Bishop.Click += new EventHandler(PictureBox_Bishop_Click);
             Form2.Controls.Add(PictureBox_Bishop);
@@ -765,8 +768,8 @@ namespace ChessV3
                 PictureBox_Knight.Image = Properties.Resources.knight_white;
             else
                 PictureBox_Knight.Image = Properties.Resources.knight_black;
-            PictureBox_Knight.Size = new Size(Config.Image_Width, Config.Image_Height);
-            PictureBox_Knight.Location = new Point(Config.Image_Width, Config.Form2_Title_Height + Config.Image_Height * 2);
+            PictureBox_Knight.Size = new Size(Config.Form2_PictureBox_Width, Config.Form2_PictureBox_Height);
+            PictureBox_Knight.Location = new Point(Config.Form2_PictureBox_Width, Config.Form2_Title_Height + Config.Form2_PictureBox_Height);
             PictureBox_Knight.SizeMode = PictureBoxSizeMode.StretchImage;
             PictureBox_Knight.Click += new EventHandler(PictureBox_Knight_Click);
             Form2.Controls.Add(PictureBox_Knight);
@@ -780,34 +783,50 @@ namespace ChessV3
         
         private static void PictureBox_Queen_Click(object sender, EventArgs e)
         {
+            TaskFinished = true;
             if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Queen(true);
             else
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Queen(false);
+
+            gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].Show();
+            Form2.Close();
         }
 
         private static void PictureBox_Rook_Click(object sender, EventArgs e)
         {
+            TaskFinished = true;
             if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Rook(true);
             else
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Rook(false);
+
+            gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].Show();
+            Form2.Close();
         }
 
         private static void PictureBox_Bishop_Click(object sender, EventArgs e)
         {
+            TaskFinished = true;
             if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Bishop(true);
             else
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Bishop(false);
+
+            gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].Show();
+            Form2.Close();            
         }
 
         private static void PictureBox_Knight_Click(object sender, EventArgs e)
         {
+            TaskFinished = true;
             if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Knight(true);
             else
                 gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Knight(false);
+
+            gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].Show();            
+            Form2.Close();
         }
 
         private static void Form2_Closed(object sender, FormClosedEventArgs e)
