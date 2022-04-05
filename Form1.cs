@@ -184,7 +184,8 @@ namespace ChessV3
                     #region obove
                     if (current_index.X == 0f) // check if on last Line
                     {
-                        MessageBox.Show("No Valid Move");
+                        Cell_To_Swap_On_Pawn_Reach = current_cell;
+                        Choose_New_Figure();
                         return;
                     }
                     if (gameBoard[curr_x - 1][curr_y].figure == null)
@@ -215,7 +216,8 @@ namespace ChessV3
                     #region under
                     if (current_index.X == Config.Row_count - 1) // check if on last Line
                     {
-                        MessageBox.Show("No Valid Move");
+                        Cell_To_Swap_On_Pawn_Reach = current_cell;
+                        Choose_New_Figure();
                         return;
                     }
                     if (gameBoard[curr_x + 1][curr_y].figure == null)
@@ -695,5 +697,147 @@ namespace ChessV3
 
             Show_Valid_Moves();
         }
+
+
+        #region Form2
+        public static Form Form2 = new Form();
+        
+        public static bool TaskFinished;
+
+        public static Cell Cell_To_Swap_On_Pawn_Reach;
+
+        public static void Choose_New_Figure()
+        {
+            TaskFinished = false;
+
+            Form2.Text = "Choose Figure";
+            Form2.Name = "Choose Figure";
+            Form2.Size = new Size(Config.Form2_Width, Config.Form2_Height);
+            Form2.MaximumSize = new Size(Config.Form2_Width, Config.Form2_Height);
+            Form2.MinimumSize = new Size(Config.Form2_Width, Config.Form2_Height);
+            Form2.StartPosition = FormStartPosition.CenterScreen;
+            Form2.FormBorderStyle = FormBorderStyle.None;
+
+            Label title = new Label();
+            title.Text = "Choose Figure!";
+            title.Location = new Point(0, 0);
+            title.Size = new Size(Config.Form2_Width, Config.Form2_Title_Height);
+
+            //Queen
+            PictureBox PictureBox_Queen = new PictureBox();
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                PictureBox_Queen.Image = Properties.Resources.queen_white;
+            else
+                PictureBox_Queen.Image = Properties.Resources.queen_black;
+            PictureBox_Queen.Size = new Size(Config.Image_Width, Config.Image_Height);
+            PictureBox_Queen.Location = new Point(0, Config.Form2_Title_Height);
+            PictureBox_Queen.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox_Queen.Click += new EventHandler(PictureBox_Queen_Click);
+            Form2.Controls.Add(PictureBox_Queen);
+
+            // Rook
+            PictureBox PictureBox_Rook = new PictureBox();
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                PictureBox_Rook.Image = Properties.Resources.rook_white;
+            else
+                PictureBox_Rook.Image = Properties.Resources.rook_black;
+            PictureBox_Rook.Size = new Size(Config.Image_Width, Config.Image_Height);
+            PictureBox_Rook.Location = new Point(Config.Image_Width, Config.Form2_Title_Height);
+            PictureBox_Rook.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox_Rook.Click += new EventHandler(PictureBox_Rook_Click);
+            Form2.Controls.Add(PictureBox_Rook);
+
+            // Bishop
+            PictureBox PictureBox_Bishop = new PictureBox();
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                PictureBox_Bishop.Image = Properties.Resources.bishop_white;
+            else
+                PictureBox_Bishop.Image = Properties.Resources.bishop_black;
+            PictureBox_Bishop.Size = new Size(Config.Image_Width, Config.Image_Height);
+            PictureBox_Bishop.Location = new Point(0, Config.Form2_Title_Height + Config.Image_Height);
+            PictureBox_Bishop.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox_Bishop.Click += new EventHandler(PictureBox_Bishop_Click);
+            Form2.Controls.Add(PictureBox_Bishop);
+
+            // Knight
+            PictureBox PictureBox_Knight = new PictureBox();
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                PictureBox_Knight.Image = Properties.Resources.knight_white;
+            else
+                PictureBox_Knight.Image = Properties.Resources.knight_black;
+            PictureBox_Knight.Size = new Size(Config.Image_Width, Config.Image_Height);
+            PictureBox_Knight.Location = new Point(Config.Image_Width, Config.Form2_Title_Height + Config.Image_Height * 2);
+            PictureBox_Knight.SizeMode = PictureBoxSizeMode.StretchImage;
+            PictureBox_Knight.Click += new EventHandler(PictureBox_Knight_Click);
+            Form2.Controls.Add(PictureBox_Knight);
+
+
+            Form2.VisibleChanged += new EventHandler(Form2_VisibleChanged);
+            Form2.FormClosed += new FormClosedEventHandler(Form2_Closed);
+
+            Form2.Show();
+        }
+        
+        private static void PictureBox_Queen_Click(object sender, EventArgs e)
+        {
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Queen(true);
+            else
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Queen(false);
+        }
+
+        private static void PictureBox_Rook_Click(object sender, EventArgs e)
+        {
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Rook(true);
+            else
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Rook(false);
+        }
+
+        private static void PictureBox_Bishop_Click(object sender, EventArgs e)
+        {
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Bishop(true);
+            else
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Bishop(false);
+        }
+
+        private static void PictureBox_Knight_Click(object sender, EventArgs e)
+        {
+            if (Cell_To_Swap_On_Pawn_Reach.figure.IsWhite)
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Knight(true);
+            else
+                gameBoard[(int)Cell_To_Swap_On_Pawn_Reach.index.X][(int)Cell_To_Swap_On_Pawn_Reach.index.Y].figure = new Figures.Knight(false);
+        }
+
+        private static void Form2_Closed(object sender, FormClosedEventArgs e)
+        {
+            Console.WriteLine("Form2 closed");
+            Reopen_Form2();
+        }
+
+        private static void Form2_VisibleChanged(object sender, EventArgs e)
+        {
+            if (!Form2.TopMost)
+            {
+                Form2.TopMost = true;
+            }
+        }
+
+        private static void Reopen_Form2()
+        {
+            // Clear Form Object for Garbage Collection
+            Form2 = null;
+            Form2 = new Form();
+
+            // If Task is not Finished Reopen Form
+            if (!TaskFinished)
+            {
+                Choose_New_Figure();
+            }
+        }
+
+        #endregion
+
     }
 }

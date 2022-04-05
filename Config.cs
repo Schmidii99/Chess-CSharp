@@ -42,10 +42,19 @@ namespace ChessV3
         public static SolidBrush BrushBlack { get; } = new SolidBrush(Color.Black);
         // ------------------------------
 
-        
+
         // image stuff ------------------
         public static int Image_Width { get; } = Cell_Width;
         public static int Image_Height { get; } = Cell_Height;
+        // ------------------------------
+
+
+        // Choose Figure Form -----------
+        public static int Form2_Width { get; } = 400;
+        public static int Form2_Height { get; } = Form2_Width + Form2_Title_Height;
+        public static int Form2_Title_Height { get; } = 20;
+        public static int Form2_PictureBox_Width { get; } = Form2_Width / 2;
+        public static int Form2_PictureBox_Height { get; } = (Form2_Height - Form2_Title_Height) / 2;
         // ------------------------------
     }
 }
