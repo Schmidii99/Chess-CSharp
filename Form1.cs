@@ -34,6 +34,18 @@ namespace ChessV3
         {
             btn_start.Visible = false;
 
+            default_8x8();
+            // default_32x32();
+
+            Show_GameBoard();
+        }
+
+        #region default setups
+        private static void default_8x8()
+        {
+            Config.Row_count = 8;
+            Config.Colum_count = 8;
+
             for (int y = 0; y < Config.Row_count; y++)
             {
                 gameBoard.Add(new List<Cell>());
@@ -43,20 +55,12 @@ namespace ChessV3
                 }
             }
 
-            add_Default_Figures();
-
-
-            Show_GameBoard();
-        }
-
-        private static void add_Default_Figures()
-        {
             bool isWhite = false;
             for (int i = 0; i < Config.Colum_count; i++)
             {
                 gameBoard[1][i].figure = new Figures.Pawn(isWhite: isWhite);
                 isWhite = !isWhite;
-                gameBoard[6][i].figure = new Figures.Pawn(isWhite: isWhite);
+                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Pawn(isWhite: isWhite);
                 isWhite = !isWhite;
             }
 
@@ -79,6 +83,64 @@ namespace ChessV3
             gameBoard[7][7].figure = new Figures.Rook(isWhite: true);
 
         }
+
+        private static void default_32x32()
+        {
+            Config.Row_count = 32;
+            Config.Colum_count = 32;
+            Config.Cell_Width = 25;
+            Config.Cell_Height = 25;
+
+            for (int y = 0; y < Config.Row_count; y++)
+            {
+                gameBoard.Add(new List<Cell>());
+                for (int x = 0; x < Config.Colum_count; x++)
+                {
+                    gameBoard[y].Add(new Cell(new Vector2(x * Config.Cell_Width + Config.X_offset, y * Config.Cell_Height + Config.Y_offset), new Vector2(Config.Cell_Width, Config.Cell_Height)));
+                }
+            }
+
+            bool isWhite = false;
+            for (int i = 0; i < Config.Colum_count; i++)
+            {
+                gameBoard[1][i].figure = new Figures.Pawn(isWhite: isWhite);
+                isWhite = !isWhite;
+                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Pawn(isWhite: isWhite);
+                isWhite = !isWhite;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                gameBoard[0][i].figure = new Figures.Rook(isWhite: isWhite);
+                gameBoard[0][i].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[0][i].figure = new Figures.Knight(isWhite: isWhite);
+                isWhite = !isWhite;
+                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Rook(isWhite: isWhite);
+                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Knight(isWhite: isWhite);
+                isWhite = !isWhite;
+            }
+
+            gameBoard[0][15].figure = new Figures.Queen(isWhite: true);
+            gameBoard[0][16].figure = new Figures.King(isWhite: true);
+
+            gameBoard[Config.Row_count - 2][15].figure = new Figures.Queen(isWhite: false);
+            gameBoard[Config.Row_count - 2][16].figure = new Figures.King(isWhite: false);
+
+            for (int i = 0; i < 5; i++)
+            {
+                gameBoard[0][i].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[0][i].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[0][i].figure = new Figures.Rook(isWhite: isWhite);
+                
+                isWhite = !isWhite;
+                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Rook(isWhite: isWhite);
+                isWhite = !isWhite;
+            }
+        }
+        #endregion
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -119,6 +181,10 @@ namespace ChessV3
                 
                 Selected_Cell = null;
                 WhiteTurn = !WhiteTurn;
+                if (WhiteTurn)
+                    lbl_current_player.Text = "Current Player: White";
+                else
+                    lbl_current_player.Text = "Current Player: Black";
 
                 if (GameWon)
                 {
@@ -130,8 +196,9 @@ namespace ChessV3
             
             Selected_Cell = gameBoard[index.X][index.Y];
 
-            if (Selected_Cell.figure.IsWhite != WhiteTurn)
-                return;
+            if (Selected_Cell.figure != null)
+                if (Selected_Cell.figure.IsWhite != WhiteTurn)
+                    return;
 
             Calculate_Valid_Points(PointToVector2(index));
         }
@@ -343,7 +410,6 @@ namespace ChessV3
             }
             else if (figure is Figures.Knight)
             {
-                int valid_moves = 0;
                 // up left
                 if (curr_x > 1 && curr_y > 0)
                 {
@@ -372,7 +438,7 @@ namespace ChessV3
                 }
 
                 // right down
-                if (curr_x < Config.Row_count - 1 && curr_y > 1)
+                if (curr_x < Config.Row_count - 1 && curr_y < Config.Colum_count - 2)
                 {
                     if (gameBoard[curr_x + 1][curr_y + 2].figure == null)
                         gameBoard[curr_x + 1][curr_y + 2].IsValidMove = true;

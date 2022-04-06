@@ -9,3 +9,23 @@ C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj
 C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.exe
 C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.pdb
 C:\Users\melon\Documents\C# Projekts\March 2022\ChessV3\obj\Debug\ChessV3.csproj.SuggestedBindingRedirects.cache
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\bin\Debug\ChessV3.exe.config
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\bin\Debug\ChessV3.exe
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\bin\Debug\ChessV3.pdb
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.csprojAssemblyReference.cache
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.Form1.resources
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.Properties.Resources.resources
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.csproj.GenerateResource.cache
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.csproj.CoreCompileInputs.cache
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.exe
+H:\TGIE\IT-S\C#\Projects\April 2022\Chess-CSharp-main\obj\Debug\ChessV3.pdb
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\bin\Debug\ChessV3.exe.config
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\bin\Debug\ChessV3.exe
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\bin\Debug\ChessV3.pdb
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.csproj.AssemblyReference.cache
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.Form1.resources
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.Properties.Resources.resources
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.csproj.GenerateResource.cache
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.csproj.CoreCompileInputs.cache
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.exe
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.pdb
