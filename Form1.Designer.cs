@@ -30,13 +30,14 @@
         {
             this.btn_start = new System.Windows.Forms.Button();
             this.lbl_current_player = new System.Windows.Forms.Label();
+            this.btn_restart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_start
             // 
-            this.btn_start.Location = new System.Drawing.Point(121, 105);
+            this.btn_start.Location = new System.Drawing.Point(19, 174);
             this.btn_start.Name = "btn_start";
-            this.btn_start.Size = new System.Drawing.Size(104, 113);
+            this.btn_start.Size = new System.Drawing.Size(334, 69);
             this.btn_start.TabIndex = 0;
             this.btn_start.Text = "Start";
             this.btn_start.UseVisualStyleBackColor = true;
@@ -52,11 +53,23 @@
             this.lbl_current_player.TabIndex = 1;
             this.lbl_current_player.Text = "Current Player: White";
             // 
+            // btn_restart
+            // 
+            this.btn_restart.Location = new System.Drawing.Point(19, 51);
+            this.btn_restart.Name = "btn_restart";
+            this.btn_restart.Size = new System.Drawing.Size(334, 69);
+            this.btn_restart.TabIndex = 2;
+            this.btn_restart.Text = "Restart";
+            this.btn_restart.UseVisualStyleBackColor = true;
+            this.btn_restart.Visible = false;
+            this.btn_restart.Click += new System.EventHandler(this.btn_start_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_restart);
             this.Controls.Add(this.lbl_current_player);
             this.Controls.Add(this.btn_start);
             this.Name = "Form1";
@@ -72,6 +85,7 @@
 
         private System.Windows.Forms.Button btn_start;
         private System.Windows.Forms.Label lbl_current_player;
+        private System.Windows.Forms.Button btn_restart;
     }
 }
 

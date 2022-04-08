@@ -18,6 +18,7 @@ namespace ChessV3
         
         public static Cell Selected_Cell { get; set; }
 
+        
         public Form1()
         {
             InitializeComponent();
@@ -27,20 +28,39 @@ namespace ChessV3
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            // initialize global Graphic Object
             Config.grObj = this.CreateGraphics();
         }
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-            btn_start.Visible = false;
+            // clear GameBoard and screen
+            gameBoard.Clear();
 
+            // reset Variables
+            GameWon = false;
+            WhiteTurn = true;
+            if (WhiteTurn)
+                lbl_current_player.Text = "Current Player: White";
+            else
+                lbl_current_player.Text = "Current Player: Black";
+
+            // Hide "start" button and show "restart" button
+            btn_start.Visible = false;
+            btn_restart.Visible = true;
+
+            // load default chess setup
             default_8x8();
             // default_32x32();
 
+            Config.grObj.Clear(Color.White);
             Show_GameBoard();
         }
 
         #region default setups
+        /// <summary>
+        /// Load precoded default Chess setup
+        /// </summary>
         private static void default_8x8()
         {
             Config.Row_count = 8;
@@ -84,6 +104,9 @@ namespace ChessV3
 
         }
 
+        /// <summary>
+        /// Load precoded 32x32 field size setup
+        /// </summary>
         private static void default_32x32()
         {
             Config.Row_count = 32;
@@ -109,34 +132,43 @@ namespace ChessV3
                 isWhite = !isWhite;
             }
 
+            isWhite = false;
             for (int i = 0; i < 5; i++)
             {
-                gameBoard[0][i].figure = new Figures.Rook(isWhite: isWhite);
-                gameBoard[0][i].figure = new Figures.Bishop(isWhite: isWhite);
-                gameBoard[0][i].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[0][0 + i * 3].figure = new Figures.Rook(isWhite: isWhite);
+                gameBoard[0][1 + i * 3].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[0][2 + i * 3].figure = new Figures.Knight(isWhite: isWhite);
                 isWhite = !isWhite;
-                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Rook(isWhite: isWhite);
-                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Bishop(isWhite: isWhite);
-                gameBoard[Config.Colum_count - 2][i].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][0 + i * 3].figure = new Figures.Rook(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][1 + i * 3].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][2 + i * 3].figure = new Figures.Knight(isWhite: isWhite);
                 isWhite = !isWhite;
             }
 
-            gameBoard[0][15].figure = new Figures.Queen(isWhite: true);
-            gameBoard[0][16].figure = new Figures.King(isWhite: true);
+            if (WhiteOnBottom)
+                isWhite = false;
+            else
+                isWhite = true;
 
-            gameBoard[Config.Row_count - 2][15].figure = new Figures.Queen(isWhite: false);
-            gameBoard[Config.Row_count - 2][16].figure = new Figures.King(isWhite: false);
+            gameBoard[0][15].figure = new Figures.Queen(isWhite: isWhite);
+            gameBoard[0][16].figure = new Figures.King(isWhite: isWhite);
 
+            isWhite = !isWhite;
+
+            gameBoard[Config.Row_count - 1][15].figure = new Figures.Queen(isWhite: isWhite);
+            gameBoard[Config.Row_count - 1][16].figure = new Figures.King(isWhite: isWhite);
+
+            isWhite = !isWhite;
+            
             for (int i = 0; i < 5; i++)
             {
-                gameBoard[0][i].figure = new Figures.Knight(isWhite: isWhite);
-                gameBoard[0][i].figure = new Figures.Bishop(isWhite: isWhite);
-                gameBoard[0][i].figure = new Figures.Rook(isWhite: isWhite);
-                
+                gameBoard[0][17 + i * 3].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[0][18 + i * 3].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[0][19 + i * 3].figure = new Figures.Rook(isWhite: isWhite);
                 isWhite = !isWhite;
-                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Knight(isWhite: isWhite);
-                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Bishop(isWhite: isWhite);
-                gameBoard[Config.Colum_count - 1][i].figure = new Figures.Rook(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][17 + i * 3].figure = new Figures.Knight(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][18 + i * 3].figure = new Figures.Bishop(isWhite: isWhite);
+                gameBoard[Config.Row_count - 1][19 + i * 3].figure = new Figures.Rook(isWhite: isWhite);
                 isWhite = !isWhite;
             }
         }
@@ -144,13 +176,18 @@ namespace ChessV3
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            // check if game is over
             if (GameWon)
                 return;
 
+            // calculate the cell from the current mouse position
             Point index = Calculate_Cell(e.Location);
+
+            // return if position is invalid = out of the field bounderies
             if (index.X < 0 || index.Y < 0)
                 return;
 
+            // if a chess figure was selected and the valid moves are shown and clicked this is called
             if (gameBoard[index.X][index.Y].IsValidMove)
             {
                 // Security statement if Selected Cell is null

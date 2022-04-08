@@ -29,3 +29,4 @@ C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.c
 C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.csproj.CoreCompileInputs.cache
 C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.exe
 C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.pdb
+C:\Users\melon\Documents\C# Projekts\April 2022\Chess-CSharp\obj\Debug\ChessV3.csproj.SuggestedBindingRedirects.cache

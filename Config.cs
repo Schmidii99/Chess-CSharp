@@ -44,8 +44,8 @@ namespace ChessV3
 
 
         // image stuff ------------------
-        public static int Image_Width { get; } = Cell_Width;
-        public static int Image_Height { get; } = Cell_Height;
+        public static int Image_Width { get => Cell_Width; }
+        public static int Image_Height { get => Cell_Height; }
         // ------------------------------
 
 
